@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boostic.studio — انضم إلينا</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #070709;
+    --bg2: #0a0a0f;
+    --neon: #00a8e8;
+    --purple: #5b21b6;
+    --violet: #8b5cf6;
+    --glass: rgba(255,255,255,0.03);
+    --glass-border: rgba(255,255,255,0.06);
+    --text: #d4d4e8;
+    --muted: #666880;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Tajawal', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: .4;
+  }
+
+  /* GLOW BLOBS */
+  .blob {
+    position: fixed; border-radius: 50%; filter: blur(120px); opacity: .18; pointer-events: none; z-index: 0;
+  }
+  .blob-1 { width: 500px; height: 500px; background: var(--purple); top: -150px; right: -100px; }
+  .blob-2 { width: 400px; height: 400px; background: var(--neon); bottom: 0; left: -100px; }
+
+  section { position: relative; z-index: 1; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 80px 24px 60px;
+  }
+
+  .logo-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: 50px; padding: 8px 20px; margin-bottom: 32px;
+    font-family: 'Montserrat', sans-serif; font-size: 13px; color: var(--neon);
+    backdrop-filter: blur(10px);
+  }
+
+  .logo-dot { width: 8px; height: 8px; background: var(--neon); border-radius: 50%; animation: pulse 2s infinite; }
+
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.5)} }
+
+  .hero h1 {
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    font-weight: 900; line-height: 1.2;
+    background: linear-gradient(135deg, #fff 30%, var(--neon) 65%, var(--violet) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+  }
+
+  .hero p {
+    max-width: 680px; font-size: clamp(1rem, 2vw, 1.15rem);
+    color: var(--muted); line-height: 1.9; margin-bottom: 40px;
+  }
+
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, var(--purple), var(--neon));
+    color: #fff; font-family: 'Tajawal', sans-serif; font-size: 1rem; font-weight: 700;
+    padding: 14px 34px; border-radius: 50px; border: none; cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 0 30px rgba(123,47,255,.4), 0 0 60px rgba(0,195,255,.15);
+    transition: transform .3s, box-shadow .3s;
+  }
+  .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 0 50px rgba(123,47,255,.6), 0 0 80px rgba(0,195,255,.25); }
+
+  /* ─── WHY JOIN ─── */
+  .section { padding: 90px 24px; max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
+    font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: 3px; color: var(--neon); text-transform: uppercase; margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff, var(--violet));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  .section-sub { color: var(--muted); font-size: 1rem; line-height: 1.8; margin-bottom: 50px; max-width: 600px; }
+
+  .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+
+  .val-card {
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: 20px; padding: 32px 28px; backdrop-filter: blur(12px);
+    transition: transform .3s, border-color .3s, box-shadow .3s;
+  }
+  .val-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(123,47,255,.4);
+    box-shadow: 0 20px 60px rgba(123,47,255,.15);
+  }
+
+  .val-icon { font-size: 2rem; margin-bottom: 14px; }
+  .val-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; color: #fff; }
+  .val-card p { font-size: .92rem; color: var(--muted); line-height: 1.75; }
+
+  /* ─── POSITIONS ─── */
+  .positions-wrap { background: var(--bg2); }
+
+  .dept-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(123,47,255,.12); border: 1px solid rgba(123,47,255,.25);
+    border-radius: 8px; padding: 6px 14px; font-size: .8rem;
+    color: var(--violet); margin-bottom: 20px;
+  }
+
+  .jobs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px; }
+
+  .job-card {
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: 20px; padding: 28px; backdrop-filter: blur(12px);
+    position: relative; overflow: hidden;
+    transition: transform .3s, border-color .3s, box-shadow .3s;
+  }
+  .job-card::before {
+    content: ''; position: absolute; top: 0; right: 0;
+    width: 60%; height: 2px;
+    background: linear-gradient(to left, transparent, var(--neon));
+    opacity: 0; transition: opacity .3s;
+  }
+  .job-card:hover { transform: translateY(-6px); border-color: rgba(0,195,255,.3); box-shadow: 0 20px 50px rgba(0,195,255,.1); }
+  .job-card:hover::before { opacity: 1; }
+
+  .job-title-en { font-family: 'Montserrat', sans-serif; font-size: .75rem; font-weight: 600; color: var(--neon); letter-spacing: 1px; margin-bottom: 6px; }
+  .job-title-ar { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 16px; }
+
+  .req-title { font-size: .78rem; color: var(--muted); font-weight: 600; margin-bottom: 10px; letter-spacing: 1px; }
+
+  .req-list { list-style: none; }
+  .req-list li {
+    font-size: .88rem; color: var(--muted); line-height: 1.6; padding: 6px 0;
+    border-bottom: 1px solid var(--glass-border); display: flex; gap: 8px; align-items: flex-start;
+  }
+  .req-list li::before { content: '→'; color: var(--neon); flex-shrink: 0; margin-top: 1px; }
+  .req-list li:last-child { border-bottom: none; }
+
+  /* ─── FORM ─── */
+  .form-wrap {
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: 24px; padding: 48px; backdrop-filter: blur(12px);
+    max-width: 780px; margin: 0 auto;
+  }
+
+  .form-title { font-size: 1.6rem; font-weight: 900; margin-bottom: 8px; color: #fff; }
+  .form-sub { color: var(--muted); font-size: .95rem; margin-bottom: 36px; line-height: 1.7; }
+
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .form-full { grid-column: 1 / -1; }
+
+  .field label { display: block; font-size: .82rem; font-weight: 600; color: var(--muted); margin-bottom: 8px; letter-spacing: .5px; }
+
+  .field input, .field select, .field textarea {
+    width: 100%; background: rgba(255,255,255,.04); border: 1px solid var(--glass-border);
+    border-radius: 12px; padding: 13px 16px; color: var(--text);
+    font-family: 'Tajawal', sans-serif; font-size: .95rem;
+    transition: border-color .3s, box-shadow .3s; outline: none;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--neon); box-shadow: 0 0 0 3px rgba(0,195,255,.1);
+  }
+  .field select option { background: #1a1a2e; }
+  .field textarea { resize: vertical; min-height: 100px; }
+
+  .file-field {
+    border: 1.5px dashed var(--glass-border); border-radius: 12px; padding: 20px;
+    text-align: center; cursor: pointer; transition: border-color .3s;
+  }
+  .file-field:hover { border-color: var(--neon); }
+  .file-field input { display: none; }
+  .file-label { font-size: .88rem; color: var(--muted); cursor: pointer; }
+  .file-label span { color: var(--neon); font-weight: 600; }
+
+  .submit-btn {
+    width: 100%; margin-top: 28px; padding: 16px;
+    background: linear-gradient(135deg, var(--purple), var(--neon));
+    color: #fff; font-family: 'Tajawal', sans-serif; font-size: 1.05rem; font-weight: 700;
+    border: none; border-radius: 14px; cursor: pointer;
+    box-shadow: 0 0 30px rgba(123,47,255,.3);
+    transition: transform .3s, box-shadow .3s;
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(123,47,255,.5); }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    text-align: center; padding: 40px 24px;
+    font-family: 'Montserrat', sans-serif; font-size: .8rem; color: var(--muted);
+    border-top: 1px solid var(--glass-border);
+  }
+  .footer strong { color: var(--neon); font-weight: 700; }
+
+  @media(max-width:600px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .form-wrap { padding: 28px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="logo-badge">
+    <div class="logo-dot"></div>
+    <span style="font-family:'Montserrat',sans-serif">Boostic<span style="font-weight:300;letter-spacing:2px">.studio</span></span>
+    <span style="color:var(--muted)">— We're Hiring</span>
+  </div>
+
+  <h1>انضم إلى رحلة الإبداع! 🚀</h1>
+
+  <p>في <strong style="-webkit-text-fill-color:var(--neon)">Boostic.studio</strong>، لا نبحث عن مجرد موظفين، بل نبحث عن شركاء نجاح وشغوفين يشاركوننا رؤيتنا في تشكيل مستقبل الرقمية. إذا كنت ترى في نفسك التميز والموهبة، فمكانك هنا.</p>
+
+  <a href="#positions" class="cta-btn">استكشف الفرص المتاحة ↓</a>
+</section>
+
+<!-- ─── WHY JOIN ─── -->
+<section class="section">
+  <div class="section-label">Why Join Us</div>
+  <h2 class="section-title">قيمنا.. لماذا تنضم إلينا؟</h2>
+  <p class="section-sub">"نحن نؤمن بأن البيئة المرنة والمحفزة هي أساس كل عمل استثنائي."</p>
+
+  <div class="values-grid">
+    <div class="val-card">
+      <div class="val-icon">🎨</div>
+      <h3>حرية إبداعية مطلقة</h3>
+      <p>لا وجود للقوالب الجامدة؛ هنا نمنحك المساحة لتجربة أفكارك وتطبيقها بلا حدود.</p>
+    </div>
+    <div class="val-card">
+      <div class="val-icon">🌐</div>
+      <h3>بيئة عمل مرنة <span style="font-family:'Montserrat',sans-serif;font-size:.85em;color:var(--neon)">Remote / Hybrid</span></h3>
+      <p>إنتاجيتك وإبداعك هما مقياسنا، أينما كان مكان عملك.</p>
+    </div>
+    <div class="val-card">
+      <div class="val-icon">🤖</div>
+      <h3>تطوير مستمر وأدوات متقدمة</h3>
+      <p>ندعم استخدام أحدث تقنيات الذكاء الاصطناعي والأتمتة لتطوير مهاراتك وتسريع عملك.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── POSITIONS ─── -->
+<div class="positions-wrap" id="positions">
+<section class="section">
+  <div class="section-label">Open Positions</div>
+  <h2 class="section-title">الشواغر الحالية</h2>
+
+  <!-- Marketing -->
+  <div class="dept-label">📁 التسويق وصناعة المحتوى — Marketing & Content</div>
+  <div class="jobs-grid">
+    <div class="job-card">
+      <div class="job-title-en">Short-Form Video Creator</div>
+      <div class="job-title-ar">صانع محتوى وفيديو قصير</div>
+      <div class="req-title">المتطلبات الأساسية</div>
+      <ul class="req-list">
+        <li>خبرة في المونتاج السريع والديناميكي</li>
+        <li>فهم خوارزميات Reels و TikTok</li>
+        <li>قدرة على تحويل الأفكار المعقدة إلى مقاطع بصرية جذابة</li>
+      </ul>
+    </div>
+    <div class="job-card">
+      <div class="job-title-en">Performance Marketing Specialist</div>
+      <div class="job-title-ar">أخصائي إعلانات ممولة</div>
+      <div class="req-title">المتطلبات الأساسية</div>
+      <ul class="req-list">
+        <li>احتراف إدارة حملات Google Ads و YouTube Ads</li>
+        <li>تحليل البيانات وقراءة مؤشرات الأداء</li>
+        <li>تحقيق أعلى عائد على الاستثمار <span style="font-family:'Montserrat',sans-serif;font-size:.85em">(ROI)</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Design -->
+  <div class="dept-label">📁 التصميم والهوية البصرية — Design & Visual Identity</div>
+  <div class="jobs-grid">
+    <div class="job-card">
+      <div class="job-title-en">UI/UX Designer</div>
+      <div class="job-title-ar">مصمم هوية بصرية وتجربة مستخدم</div>
+      <div class="req-title">المتطلبات الأساسية</div>
+      <ul class="req-list">
+        <li>شغف حقيقي بـ Minimal Luxury Design</li>
+        <li>بناء هويات تجارية متكاملة من الصفر</li>
+        <li>تصميم مواقع ويب متجاوبة وسلسة</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+</div>
+
+<!-- ─── FORM ─── -->
+<section class="section">
+  <div class="form-wrap">
+    <div class="form-title">لم تجد شاغراً يناسبك؟ 🌟</div>
+    <p class="form-sub">نحن دائماً نرحب بالمبدعين! اترك بصمتك وسنتواصل معك فور توفر فرصة مناسبة.</p>
+
+    <form action="https://formspree.io/f/mdarkger" method="POST" enctype="multipart/form-data" id="applyForm">
+    <div class="form-grid">
+      <div class="field">
+        <label>الاسم الكامل</label>
+        <input type="text" name="الاسم الكامل" placeholder="اسمك الكامل" required>
+      </div>
+      <div class="field">
+        <label>البريد الإلكتروني — Email</label>
+        <input type="email" name="email" placeholder="example@email.com" dir="ltr" required>
+      </div>
+      <div class="field">
+        <label>رقم التواصل — Phone</label>
+        <input type="tel" name="رقم التواصل" placeholder="+966 5X XXX XXXX" dir="ltr">
+      </div>
+      <div class="field">
+        <label>مجال إبداعك — Specialty</label>
+        <select name="مجال التخصص" required>
+          <option value="" disabled selected>اختر تخصصك</option>
+          <option>صناعة محتوى — Content Creation</option>
+          <option>تسويق رقمي — Performance Marketing</option>
+          <option>تصميم — Design & Visual Identity</option>
+          <option>تطوير ويب — Web Development</option>
+        </select>
+      </div>
+      <div class="field form-full">
+        <label>رابط معرض الأعمال — Portfolio Link (إلزامي)</label>
+        <input type="url" name="رابط Portfolio" placeholder="https://behance.net/yourname أو LinkedIn أو Drive..." dir="ltr" required>
+      </div>
+      <div class="field form-full">
+        <label>كلمة تشبهك — Tell Us About You</label>
+        <textarea name="كلمة تشبهك" placeholder="تحدث عن شغفك أو أبرز إنجاز لك باختصار..."></textarea>
+      </div>
+      <div class="field form-full">
+        <label>السيرة الذاتية — CV (PDF)</label>
+        <div class="file-field" onclick="document.getElementById('cvFile').click()">
+          <input type="file" id="cvFile" name="السيرة الذاتية" accept=".pdf">
+          <div class="file-label">اسحب ملفك هنا أو <span>انقر للرفع</span> — PDF فقط</div>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn">أرسل شغفك الآن ✨</button>
+    </form>
+    <div id="successMsg" style="display:none;text-align:center;padding:30px;color:var(--neon);font-size:1.1rem;font-weight:700">
+      ✅ تم استلام طلبك! سنتواصل معك قريباً.
+    </div>
+    <script>
+      document.getElementById('applyForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const form = e.target;
+        const data = new FormData(form);
+        const res = await fetch('https://formspree.io/f/mrevnqpn', { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+        if (res.ok) {
+          form.style.display = 'none';
+          document.getElementById('successMsg').style.display = 'block';
+        }
+      });
+    </script>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer class="footer">
+  <strong>Boostic.studio</strong> — بوستيك.. نضاعف أثرك الرقمي. 🚀
+  <div style="margin-top:8px;font-size:.75rem">© 2025 All Rights Reserved</div>
+</footer>
+
+</body>
+</html>
